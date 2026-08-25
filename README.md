@@ -181,7 +181,7 @@ verrouillage et faire l'objet d'un audit de sécurité indépendant.
 
 ---
 
-> Documentation de projet revue en août 2026.
+> Projet mis en avant dans la vitrine GitHub ; documentation revue en août 2026.
 
 ## 👤 Auteur
 
