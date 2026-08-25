@@ -78,8 +78,8 @@ dotnet tool install --global dotnet-ef
 ### Installation
 
 ~~~bash
-git clone https://github.com/christophersemard/PasswordManager.git
-cd PasswordManager
+git clone https://github.com/christophersemard/password-manager.git
+cd password-manager
 dotnet restore
 dotnet ef database update --project Api --startup-project Api
 ~~~
