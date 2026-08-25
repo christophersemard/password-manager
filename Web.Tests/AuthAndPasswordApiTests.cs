@@ -43,7 +43,7 @@ public class AuthAndPasswordApiTests
 
         Assert.NotNull(loginResult);
         Assert.False(string.IsNullOrEmpty(loginResult.Token));
-        Console.WriteLine($"✅ Connexion réussie, JWT récupéré : {loginResult.Token}");
+        Console.WriteLine("✅ Connexion réussie, JWT récupéré");
 
         // Ajouter le token dans les headers pour les requêtes suivantes
         _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", loginResult.Token);

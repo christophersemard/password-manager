@@ -81,6 +81,16 @@ namespace Api.Migrations
                 name: "IX_PasswordEntries_UserId",
                 table: "PasswordEntries",
                 column: "UserId");
+
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Personnel" },
+                    { 2, "Travail" },
+                    { 3, "Autre" }
+                });
         }
 
         /// <inheritdoc />

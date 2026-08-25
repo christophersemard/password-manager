@@ -69,19 +69,16 @@
 
     private string ValidateConfirmPassword(string value)
     {
-        Console.WriteLine($"Password: {Password}, ConfirmPassword: {value}");
         if (string.IsNullOrWhiteSpace(value))
             return "Veuillez confirmer votre mot de passe";
         if (value != Password)
             return "Les mots de passe ne correspondent pas";
         
-        Console.WriteLine("Passwords match");
         return null;
     }
 
     private async Task HandleRegister()
     {
-        Console.WriteLine($"Tentative d'inscription : {Email}");
         error = "";
         success = false;
         

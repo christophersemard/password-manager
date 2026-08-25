@@ -3,7 +3,6 @@ using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using System.Text;
 using Blazored.LocalStorage;
 using Core.Models;
 using Web.Client.Services;
@@ -37,15 +36,12 @@ namespace Web.Client.Services
 
             // 🔑 Récupérer la clé AES dérivée
             byte[] key = _authService.GetEncryptionKey();
-            Console.WriteLine($"🔹 Clé AES utilisée pour déchiffrement : {Convert.ToBase64String(key)}");
 
             // 🔓 Déchiffrer chaque mot de passe
             foreach (var entry in result)
             {
                 try
                 {
-                    Console.WriteLine($"✅ Données récupérées de l’API : {entry.Title} - {entry.EncryptedPassword}");
-
                     if (string.IsNullOrWhiteSpace(entry.EncryptedPassword))
                     {
                         Console.WriteLine($"❌ Erreur : EncryptedPassword est vide pour {entry.Title}");
@@ -56,12 +52,9 @@ namespace Web.Client.Services
                     try
                     {
                         byte[] encryptedData = Convert.FromBase64String(entry.EncryptedPassword);
-                        Console.WriteLine($"✅ Base64 décodé avec succès pour {entry.Title}");
 
                         // 🔓 Déchiffrement
                         entry.DecryptedPassword = EncryptionService.Decrypt(encryptedData, key);
-
-                        Console.WriteLine($"✅ Mot de passe déchiffré pour '{entry.Title}' : {entry.DecryptedPassword}");
                     }
                     catch (FormatException ex)
                     {
@@ -106,13 +99,10 @@ namespace Web.Client.Services
                 Console.WriteLine("❌ Erreur : Clé AES non disponible !");
                 return;
             }
-            Console.WriteLine("🔹 PasswordService - Clé AES avant chiffrement : OK");
-
             // 🔒 Chiffrer le mot de passe
             if (!string.IsNullOrWhiteSpace(entry.DecryptedPassword))
             {
                 entry.EncryptedPassword = EncryptionService.Encrypt(entry.DecryptedPassword, key);
-                Console.WriteLine($"✅ Mot de passe chiffré : {entry.EncryptedPassword}");
             }
             else
             {
@@ -153,13 +143,10 @@ namespace Web.Client.Services
                 Console.WriteLine("❌ Erreur : Clé AES non disponible !");
                 return;
             }
-            Console.WriteLine("🔹 PasswordService - Clé AES avant chiffrement : OK");
-
             // 🔒 Chiffrer le mot de passe avant d’envoyer
             if (!string.IsNullOrWhiteSpace(entry.DecryptedPassword))
             {
                 entry.EncryptedPassword = EncryptionService.Encrypt(entry.DecryptedPassword, key);
-                Console.WriteLine($"✅ Mot de passe chiffré mis à jour : {entry.EncryptedPassword}");
             }
             else
             {

@@ -52,10 +52,7 @@ namespace Web.Client.Services
                 using var decryptor = aes.CreateDecryptor();
                 byte[] decryptedBytes = decryptor.TransformFinalBlock(encryptedBytes, 0, encryptedBytes.Length);
 
-                // 🔹 Assurer un bon décodage
                 string decryptedText = Encoding.UTF8.GetString(decryptedBytes).TrimEnd('\0');
-                Console.WriteLine($"✅ Texte déchiffré : {decryptedText}");
-
                 return decryptedText;
             }
             catch (CryptographicException ex)

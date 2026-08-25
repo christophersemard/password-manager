@@ -32,10 +32,6 @@ namespace Api.Controllers
             var passwordEntries = await _context.PasswordEntries
                 .Where(pe => pe.UserId == userId)
                 .Include(pe=> pe.User).Include(pe=> pe.Category).ToListAsync();
-            foreach (var p in passwordEntries)
-            {
-                Console.WriteLine($"✅ API - Retourne : {p.EncryptedPassword}");
-            }
             return Ok(passwordEntries);
         }
 
@@ -49,14 +45,6 @@ namespace Api.Controllers
             }
             
             int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-            var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
-            
-            if (userId == null)
-            {
-                return Unauthorized("Utilisateur non authentifié.");
-            }
-            
-            Console.WriteLine(userId);
 
             var passwordEntry = new PasswordEntry
             {
@@ -71,13 +59,12 @@ namespace Api.Controllers
                 UpdatedAt = DateTime.UtcNow
             };
 
-            Console.WriteLine($"✅ API - Reçu pour stockage : {passwordEntry.EncryptedPassword}");
-            _logger.LogInformation("Création d'une entrée de mot de passe pour l'utilisateur {UserId}: {@PasswordEntry}", userId, passwordEntry);
+            _logger.LogInformation("Création d'une entrée de mot de passe pour l'utilisateur {UserId}", userId);
 
             _context.PasswordEntries.Add(passwordEntry);
             await _context.SaveChangesAsync();
 
-            _logger.LogInformation("Entrée de mot de passe ajoutée avec succès: {@PasswordEntry}", passwordEntry);
+            _logger.LogInformation("Entrée {PasswordEntryId} ajoutée pour l'utilisateur {UserId}", passwordEntry.Id, userId);
 
             return CreatedAtAction(nameof(GetPasswordEntry), new { id = passwordEntry.Id }, passwordEntry);
         }
@@ -124,7 +111,7 @@ namespace Api.Controllers
             passwordEntry.Notes = passwordEntryDto.Notes ?? passwordEntry.Notes;
             passwordEntry.UpdatedAt = DateTime.UtcNow;
 
-            _logger.LogInformation("Mise à jour de l'entrée de mot de passe: {@PasswordEntry}", passwordEntry);
+            _logger.LogInformation("Mise à jour de l'entrée {PasswordEntryId} pour l'utilisateur {UserId}", id, userId);
 
             _context.Entry(passwordEntry).State = EntityState.Modified;
             await _context.SaveChangesAsync();
@@ -147,7 +134,7 @@ namespace Api.Controllers
                 return NotFound("Entrée non trouvée ou non accessible.");
             }
 
-            _logger.LogInformation("Suppression de l'entrée de mot de passe: {@PasswordEntry}", passwordEntry);
+            _logger.LogInformation("Suppression de l'entrée {PasswordEntryId} pour l'utilisateur {UserId}", id, userId);
 
             _context.PasswordEntries.Remove(passwordEntry);
             await _context.SaveChangesAsync();

@@ -3,3 +3,15 @@ obj/
 /packages/
 riderModule.iml
 /_ReSharper.Caches/
+
+.idea/
+.vs/
+*.user
+*.suo
+*.DotSettings.user
+
+*.db
+*.db-shm
+*.db-wal
+
+appsettings.Local.json

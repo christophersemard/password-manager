@@ -19,8 +19,6 @@ namespace Web.Client.Handlers
         {
             // Récupère le token JWT depuis le local storage
             var token = await _localStorage.GetItemAsync<string>("authToken");
-             Console.WriteLine("Token: ");
-            Console.WriteLine(token);
             if (!string.IsNullOrWhiteSpace(token))
             {
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
