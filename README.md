@@ -181,6 +181,8 @@ verrouillage et faire l'objet d'un audit de sécurité indépendant.
 
 ---
 
+> Documentation de projet revue en août 2026.
+
 ## 👤 Auteur
 
 Projet réalisé par [Christopher Semard](https://github.com/christophersemard)
